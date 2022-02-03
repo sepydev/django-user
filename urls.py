@@ -5,6 +5,7 @@ from django.views.generic.base import RedirectView
 from django.conf import settings
 
 PASSWORD_RESET_CONFIRM_REDIRECT_URL = getattr(settings, 'PASSWORD_RESET_CONFIRM_REDIRECT_URL')
+ACCOUNT_CONFIRM_EMAIL_URL = getattr(settings, 'ACCOUNT_CONFIRM_EMAIL_URL')
 
 urlpatterns = [
     path('api/', include('dj_rest_auth.urls')),
@@ -15,7 +16,7 @@ urlpatterns = [
          RedirectView.as_view(url=PASSWORD_RESET_CONFIRM_REDIRECT_URL + '%(uidb64)s/%(token)s'),
          name='password_reset_confirm'
          ),
-    re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(),
+    re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$',
+            RedirectView.as_view(url=ACCOUNT_CONFIRM_EMAIL_URL + '?key=%(key)s'),
             name='account_confirm_email'),
-
 ]
