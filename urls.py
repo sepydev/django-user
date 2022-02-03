@@ -1,11 +1,19 @@
 from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.views import RegisterView
 from django.urls import path, include, re_path
+from django.views.generic.base import RedirectView
+from django.conf import settings
+
+PASSWORD_RESET_CONFIRM_REDIRECT_URL = getattr(settings, 'PASSWORD_RESET_CONFIRM_REDIRECT_URL')
 
 urlpatterns = [
     path('api/', include('dj_rest_auth.urls')),
     path('api/registration/', include('dj_rest_auth.registration.urls')),
     path('api/registration/', RegisterView.as_view(), name='account_signup'),
+    path('password/reset/confirm/<uidb64>/<token>/',
+         RedirectView.as_view(url=PASSWORD_RESET_CONFIRM_REDIRECT_URL + '%(uidb64)s/%(token)s'),
+         name='password_reset_confirm'
+         ),
     re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(),
             name='account_confirm_email'),
 
