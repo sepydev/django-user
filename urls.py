@@ -8,6 +8,7 @@ PASSWORD_RESET_CONFIRM_REDIRECT_URL = getattr(settings, 'PASSWORD_RESET_CONFIRM_
 
 urlpatterns = [
     path('api/', include('dj_rest_auth.urls')),
+    path('rest-framework/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/registration/', include('dj_rest_auth.registration.urls')),
     path('api/registration/', RegisterView.as_view(), name='account_signup'),
     path('password/reset/confirm/<uidb64>/<token>/',
