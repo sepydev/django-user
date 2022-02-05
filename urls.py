@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/registration/', include('dj_rest_auth.registration.urls')),
     path('api/registration/', RegisterView.as_view(), name='account_signup'),
     path('password/reset/confirm/<uidb64>/<token>/',
-         RedirectView.as_view(url=PASSWORD_RESET_CONFIRM_REDIRECT_URL + '%(uidb64)s/%(token)s'),
+         RedirectView.as_view(url=PASSWORD_RESET_CONFIRM_REDIRECT_URL + '?uidb64=%(uidb64)s&token=%(token)s'),
          name='password_reset_confirm'
          ),
     re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$',
