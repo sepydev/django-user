@@ -8,3 +8,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 LOGIN_URL = 'rest_framework:login'
 LOGOUT_URL = 'rest_framework:logout'
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserDetailSerializer'
+}

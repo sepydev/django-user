@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -37,6 +38,30 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     email = models.EmailField(_('Email address'), unique=True)
+    biography = models.TextField(
+        verbose_name=_('Biography'),
+        blank=True,
+    )
+    website = models.URLField(
+        verbose_name=_('Website address'),
+        blank=True,
+    )
+    phone_validator = RegexValidator(
+        regex=r'^\+?1?\d{9,15}$',
+        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+    )
+    phone_number = models.CharField(
+        verbose_name=_('Phone number'),
+        blank=True,
+        validators=[phone_validator],
+        max_length=17
+    )
+
+    gender = models.CharField(
+        verbose_name=_('Gender'),
+        blank=True,
+        max_length=20
+    )
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
