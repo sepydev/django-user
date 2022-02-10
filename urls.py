@@ -1,14 +1,22 @@
-from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.views import RegisterView
+from django.conf import settings
 from django.urls import path, include, re_path
 from django.views.generic.base import RedirectView
-from django.conf import settings
+from rest_framework import routers
+
+from .views import UploadUserPhotoViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'upload-photo', UploadUserPhotoViewSet)
 
 PASSWORD_RESET_CONFIRM_REDIRECT_URL = getattr(settings, 'PASSWORD_RESET_CONFIRM_REDIRECT_URL')
 ACCOUNT_CONFIRM_EMAIL_URL = getattr(settings, 'ACCOUNT_CONFIRM_EMAIL_URL')
 
 urlpatterns = [
     path('api/', include('dj_rest_auth.urls')),
+    path('api/user/', include(router.urls)),
+
     path('rest-framework/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/registration/', include('dj_rest_auth.registration.urls')),
     path('api/registration/', RegisterView.as_view(), name='account_signup'),

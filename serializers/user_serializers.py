@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
 
-from users.models import User as UserModel
+from ..models import User as UserModel
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -26,6 +26,15 @@ class UserDetailSerializer(serializers.ModelSerializer):
                   'biography',
                   'website',
                   'phone_number',
-                  'gender'
+                  'gender',
+                  'photo'
                   )
-        read_only_fields = ('email',)
+        read_only_fields = ('email', 'photo')
+
+
+class UserPhotoSerializer(serializers.ModelSerializer):
+    # photo = serializers.FileField()
+
+    class Meta:
+        model = UserModel
+        fields = ('pk', 'photo')

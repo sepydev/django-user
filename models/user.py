@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from django.core.validators import RegexValidator
@@ -36,6 +38,14 @@ class UserManager(BaseUserManager):
         )
 
 
+def user_directory_path(instance, filename):
+    ext = filename.split('.')[-1]
+    if instance.pk:
+        return 'images/{0}.{1}'.format(uuid4().hex, ext)
+    else:
+        pass
+
+
 class User(AbstractUser):
     email = models.EmailField(_('Email address'), unique=True)
     biography = models.TextField(
@@ -62,6 +72,8 @@ class User(AbstractUser):
         blank=True,
         max_length=20
     )
+
+    photo = models.ImageField(upload_to=user_directory_path, blank=True)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
