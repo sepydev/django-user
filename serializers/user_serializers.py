@@ -30,11 +30,3 @@ class UserDetailSerializer(serializers.ModelSerializer):
                   'photo'
                   )
         read_only_fields = ('email', 'photo')
-
-
-class UserPhotoSerializer(serializers.ModelSerializer):
-    # photo = serializers.FileField()
-
-    class Meta:
-        model = UserModel
-        fields = ('pk', 'photo')
