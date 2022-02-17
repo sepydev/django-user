@@ -1,1 +1,1 @@
-from .custom_model_permisions import DjangoModelPermission, IsOwnerPermission  # noqa
+from .model_permissions import DjangoModelPermission, IsOwnerPermission  # noqa
